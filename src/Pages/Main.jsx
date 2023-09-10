@@ -6,6 +6,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import axios from "axios";
 
 const Main = () => {
   const [qrColor, setQrColor] = useState("");
@@ -13,7 +14,6 @@ const Main = () => {
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
   const [format, setFormat] = useState("");
-  const [blobDown, setblobDown] = useState("");
 
   console.log(qrColor);
 
@@ -53,17 +53,18 @@ const Main = () => {
     setName(data.title);
     setFormat(data.formats);
 
-    const fdata = await fetch(
+    const fdata = await axios.get(
       `http://api.qrserver.com/v1/create-qr-code/?data=${
         data.title
-      }&size=[${Number(data.height)}]*[${Number(
+      }&size=[${Number(data.height)}]x[${Number(
         data.width
       )}]&color=${qrColor.slice(1)}&bgcolor=${bgColor.slice(1)}`
     );
 
-    setUrl(fdata.url);
-    const fdatablob = await fdata.blob();
-    setblobDown(fdatablob);
+    console.log(fdata.request.responseURL);
+    setUrl(fdata.request.responseURL);
+    // const fdatablob = await fdata.blob();
+    // setblobDown(fdatablob);
   };
 
   const [age, setAge] = React.useState("");
@@ -77,10 +78,9 @@ const Main = () => {
     setBgColor("");
     setQrColor("");
     setAge("");
-    let bloburl = URL.createObjectURL(blobDown);
-    console.log(name, format, bloburl);
+
     const atag = document.createElement("a");
-    atag.href = bloburl;
+    atag.href = url;
     atag.setAttribute("download", `${name}QR.${format}`);
     document.body.appendChild(atag);
     atag.click();
