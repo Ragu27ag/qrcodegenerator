@@ -53,13 +53,15 @@ const Main = () => {
     setName(data.title);
     setFormat(data.formats);
 
-    const fdata = await axios.get(
-      `http://api.qrserver.com/v1/create-qr-code/?data=${
-        data.title
-      }&size=[${Number(data.height)}]x[${Number(
-        data.width
-      )}]&color=${qrColor.slice(1)}&bgcolor=${bgColor.slice(1)}`
-    );
+    const fdata = await axios
+      .get(
+        `http://api.qrserver.com/v1/create-qr-code/?data=${
+          data.title
+        }&size=[${Number(data.height)}]x[${Number(
+          data.width
+        )}]&color=${qrColor.slice(1)}&bgcolor=${bgColor.slice(1)}`
+      )
+      .catch((err) => console.log(err));
 
     console.log(fdata.request.responseURL);
     setUrl(fdata.request.responseURL);
