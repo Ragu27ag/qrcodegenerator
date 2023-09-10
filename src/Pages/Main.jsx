@@ -55,7 +55,7 @@ const Main = () => {
 
     const fdata = await axios
       .get(
-        `http://api.qrserver.com/v1/create-qr-code/?data=${
+        `https://extraordinary-cactus-e4a215.netlify.app/api/?data=${
           data.title
         }&size=[${Number(data.height)}]x[${Number(
           data.width
