@@ -88,14 +88,17 @@ const Main = () => {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        background: "linear-gradient(to right ,#74ebd5,#9face6)",
+        height: "100vh",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           flexWrap: "wrap",
-
-          background: "linear-gradient(to right ,#74ebd5,#9face6)",
         }}
       >
         <Typography
@@ -118,7 +121,6 @@ const Main = () => {
         <Box
           sx={{
             marginTop: "50px",
-
             border: "1px solid grey",
             borderRadius: "8px",
             boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
@@ -253,7 +255,7 @@ const Main = () => {
           )}{" "}
         </Box>
       </Box>
-    </>
+    </Box>
   );
 };
 
