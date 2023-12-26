@@ -9,13 +9,13 @@ import FormControl from "@mui/material/FormControl";
 import axios from "axios";
 
 const Main = () => {
-  const [qrColor, setQrColor] = useState("");
-  const [bgColor, setBgColor] = useState("");
+  // const [qrColor, setQrColor] = useState("");
+  // const [bgColor, setBgColor] = useState("");
   const [url, setUrl] = useState("");
   const [name, setName] = useState("");
   const [format, setFormat] = useState("");
 
-  console.log(qrColor);
+  // console.log(qrColor);
 
   //   const validation = yup.object().shape({
   //     title: yup.string().required("Enter the title"),
@@ -49,9 +49,17 @@ const Main = () => {
         data[ele.name] = ele.value;
       }
     });
-    console.log(qrColor.slice(1));
-    setName(data.title);
+    const res = {};
+    const header = ["name", "from", "to", "depature", "arrival", "gate"];
+    data.title.split(",").forEach((val, i) => {
+      res[header[i]] = val;
+    });
+    console.log(res);
+    // console.log(qrColor.slice(1));
+    data.title = JSON.stringify(res);
+    setName(res);
     setFormat(data.formats);
+    console.log(data.title);
 
     const fdata = await axios
       .get(
@@ -59,9 +67,21 @@ const Main = () => {
           data.title
         }&size=[${Number(data.height)}]x[${Number(
           data.width
-        )}]&color=${qrColor.slice(1)}&bgcolor=${bgColor.slice(1)}`
+        )}]&color=000&bgcolor=fff`
       )
       .catch((err) => console.log(err));
+
+    //original
+
+    // await axios
+    // .get(
+    //   `https://extraordinary-cactus-e4a215.netlify.app/api/?data=${
+    //     data.title
+    //   }&size=[${Number(data.height)}]x[${Number(
+    //     data.width
+    //   )}]&color=${qrColor.slice(1)}&bgcolor=${bgColor.slice(1)}`
+    // )
+    // .catch((err) => console.log(err));
 
     console.log(fdata.request.responseURL);
     setUrl(fdata.request.responseURL);
@@ -77,13 +97,14 @@ const Main = () => {
 
   const handleDownload = async () => {
     document.getElementById("form").reset();
-    setBgColor("");
-    setQrColor("");
+    // setBgColor("");
+    // setQrColor("");
     setAge("");
 
     const atag = document.createElement("a");
     atag.href = url;
-    atag.setAttribute("download", `${name}QR.${format}`);
+
+    atag.setAttribute("download", `${name}QR_${Date.now()}.${format}`);
     document.body.appendChild(atag);
     atag.click();
     atag.remove();
@@ -137,11 +158,11 @@ const Main = () => {
             <TextField
               name="title"
               id="standard-basic"
-              label="Enter title "
               variant="standard"
               // onChange={formData.handleChange}
               // value={formData.title}
               required
+              placeholder="name,from,to,depature,arrival,gate"
               sx={{ marginTop: "5px" }}
             />
             <br />
@@ -165,7 +186,7 @@ const Main = () => {
               required
             />
             <br />
-            <TextField
+            {/* <TextField
               name="qrcolor"
               id="standard-basic"
               label="Enter QR color"
@@ -204,7 +225,7 @@ const Main = () => {
                 right: "50px",
                 top: "220px",
               }}
-            ></div>
+            ></div> */}
             <br />
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
               <InputLabel id="demo-simple-select-standard-label">
