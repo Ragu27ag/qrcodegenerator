@@ -145,12 +145,13 @@ const Main = () => {
           sx={{
             marginTop: "50px",
             border: "1px solid grey",
+            padding: "10px",
             borderRadius: "8px",
             boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
             minWidth: "300px",
             textAlign: "center",
             position: "relative",
-            minHeight: "500px",
+            minHeight: "250px",
             background: "linear-gradient(to right ,#e4efe9,#e4efe9)",
           }}
         >
@@ -162,7 +163,7 @@ const Main = () => {
               // onChange={formData.handleChange}
               // value={formData.title}
               required
-              placeholder="name,from,to,depature,arrival,gate"
+              label="name,from,to,depature,arrival,gate"
               sx={{ marginTop: "5px" }}
             />
             <br />
